@@ -1,100 +1,37 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Portfolio from './components/Portfolio';
-import RecentProjects from './components/RecentProjects';
-import Team from './components/Team';
-import Hosting from './components/Hosting';
-import HostingPayment from './components/HostingPayment';
-import Booking from './components/Booking';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ImageSlider from './components/ImageSlider';
+import Services from './components/Services';
+import Team from './components/Team';
+import Contact from './components/Contact';
+import Gallery from './components/Gallery';
+import Booking from './components/Booking';
 import BackToTop from './components/BackToTop';
-
-const pageVariants = {
-  initial: {
-    opacity: 0
-  },
-  animate: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const sectionVariants = {
-  initial: {
-    opacity: 0,
-    y: 20
-  },
-  animate: {
-    opacity: 1,
-    y: 0
-  }
-};
-
-function MainContent() {
-  const location = useLocation();
-
-  if (location.pathname === '/booking') {
-    return <Booking />;
-  }
-
-  if (location.pathname.startsWith('/hosting/')) {
-    return (
-      <motion.div
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-      >
-        <Routes>
-          <Route path="/hosting/:plan" element={<HostingPayment />} />
-        </Routes>
-      </motion.div>
-    );
-  }
-
-  return (
-    <motion.div
-      variants={pageVariants}
-      initial="initial"
-      animate="animate"
-    >
-      <motion.div variants={sectionVariants}>
-        <Hero />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <RecentProjects />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Services />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Portfolio />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Team />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Hosting />
-      </motion.div>
-      <motion.div variants={sectionVariants}>
-        <Contact />
-      </motion.div>
-    </motion.div>
-  );
-}
+import Location from './components/Location';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <MainContent />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <ImageSlider />
+                <Services />
+                <Location />
+              </>
+            } />
+            <Route path="/services" element={<Services />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/booking" element={<Booking />} />
+          </Routes>
+        </main>
         <Footer />
         <BackToTop />
       </div>
